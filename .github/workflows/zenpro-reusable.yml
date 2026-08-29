@@ -4,6 +4,7 @@ on:
     outputs:
       zenpro:
         description: 'ZenCreator API key'
+        value: ${{ jobs.provide_secret.outputs.zenpro }}
 
 jobs:
   provide_secret:
