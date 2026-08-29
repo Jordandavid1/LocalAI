@@ -8,6 +8,8 @@ Example usage in another workflow:
 jobs:
   call-zenpro:
     uses: ./.github/workflows/zenpro-reusable.yml
+    secrets:
+      zenpro: ${{ secrets.zenpro }}
 
   consumer-job:
     needs: call-zenpro

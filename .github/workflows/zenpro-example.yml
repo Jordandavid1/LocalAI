@@ -7,6 +7,8 @@ on:
 jobs:
   call-zenpro:
     uses: ./.github/workflows/zenpro-reusable.yml
+    secrets:
+      zenpro: ${{ secrets.zenpro }}
 
   run-using-zenpro:
     runs-on: ubuntu-latest
