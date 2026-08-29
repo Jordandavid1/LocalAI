@@ -1,0 +1,17 @@
+name: ZenPro - provide secret
+on:
+  workflow_call:
+    outputs:
+      zenpro:
+        description: 'ZenCreator API key'
+
+jobs:
+  provide_secret:
+    runs-on: ubuntu-latest
+    outputs:
+      zenpro: ${{ steps.set.outputs.zenpro }}
+    steps:
+      - name: Expose zenpro as workflow output
+        id: set
+        run: |
+          echo "zenpro=${{ secrets.zenpro }}" >> $GITHUB_OUTPUT
