@@ -1,23 +1,34 @@
-ZenPro reusable workflow
+ZenPro Secret Integration
 
-This repository provides a reusable workflow at `.github/workflows/zenpro-reusable.yml` that exposes the `zenpro` secret as an output.
+This repository has the `zenpro` repository secret configured and ready to use in GitHub Actions workflows.
 
-Example usage in another workflow:
+## Direct Usage (Recommended)
+
+Access the secret directly in your workflows:
+
+```yaml
+env:
+  ZENPRO: ${{ secrets.zenpro }}
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use zenpro secret
+        run: echo "Using ZENPRO (masked by GitHub)"
+```
+
+Or pass it directly to a step:
 
 ```yaml
 jobs:
-  call-zenpro:
-    uses: ./.github/workflows/zenpro-reusable.yml
-    secrets:
-      zenpro: ${{ secrets.zenpro }}
-
-  consumer-job:
-    needs: call-zenpro
-    env:
-      ZENPRO: ${{ needs.call-zenpro.outputs.zenpro }}
+  my-job:
+    runs-on: ubuntu-latest
     steps:
-      - name: Use zenpro
-        run: echo "Using ZENPRO (masked)"
+      - name: Make API call
+        run: curl https://api.zencreator.pro/api/... -H "Authorization: Bearer ${{ secrets.zenpro }}"
 ```
 
-Prefer using the reusable workflow rather than embedding the secret directly in workflow files. The secret is available as `${{ needs.<job-id>.outputs.zenpro }}` and can be mapped to an env var for convenience.
+## Reference Test
+
+See `.github/workflows/zenpro-direct-test.yml` for a working example that verifies the secret is accessible during workflow runs.
