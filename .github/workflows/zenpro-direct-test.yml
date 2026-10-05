@@ -1,0 +1,22 @@
+name: ZenPro Direct Test
+on:
+  workflow_dispatch:
+
+env:
+  ZENPRO: ${{ secrets.zenpro }}
+
+jobs:
+  test-zenpro:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Test zenpro secret directly
+        run: |
+          if [ -z "$ZENPRO" ]; then
+            echo "ZENPRO not available"
+            exit 1
+          fi
+          echo "SUCCESS: ZENPRO is present (masked by GitHub)."
+        shell: bash
